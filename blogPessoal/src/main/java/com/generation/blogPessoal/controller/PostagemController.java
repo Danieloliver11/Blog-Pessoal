@@ -19,28 +19,28 @@ import com.generation.blogPessoal.model.Postagem;
 import com.generation.blogPessoal.repository.PostagemRepository;
 
 
-@RestController
-@RequestMapping("/post")
-@CrossOrigin("*")
+@RestController // define uma classe controller
+@RequestMapping("/post") // define uma URI para ser consumida no front-end
+@CrossOrigin("*")   // aceita requisicao de qualquer origem, seja ela web, mobile etc
 public class PostagemController {
-	@Autowired
+	@Autowired // criamos uma ingecao de dependecia porque a classe abaixo, se trata de uma interface, entao nao pode ser instanciada
 	private PostagemRepository repository; //pega da interface esse PostagemRepository.
 	
-	@GetMapping					
+	@GetMapping		// retorna todos os dados contidos dentro da base de dados			
 	public ResponseEntity<List<Postagem>> GetAll(){
-		return ResponseEntity.ok(repository.findAll());
+		return ResponseEntity.ok(repository.findAll()); // caso a resposta do servidor seja OK, entao e impresso os dados ao usuario
 	}
 					// {id} valor que vai vir para uri (url)
 	@GetMapping("/{id}")						//@PathVariable vai trazer uma variação do caminho para o id 
 	public ResponseEntity<Postagem> GetById(@PathVariable long id){
-		return repository.findById(id)
-				.map(resp -> ResponseEntity.ok(resp)) // lambda 
-				.orElse(ResponseEntity.notFound().build());
+		return repository.findById(id) // cria uma condicao de retorno
+				.map(resp -> ResponseEntity.ok(resp)) // lambda caso haja dados nesse id requisitado, entao e retornado os dados do id
+				.orElse(ResponseEntity.notFound().build()); // caso contrario, e retornado uma mensagem de erro 404, informado que os dados solicitados nao foram localizados na base de dados
 	}
 	// fazendo uma busca por titulo
-	@GetMapping("/titulo/{titulo}")
-	public ResponseEntity<List<Postagem>>GetByTitulo(@PathVariable String titulo){
-		return ResponseEntity.ok(repository.findAllBytituloContainingIgnoreCase(titulo));
+	@GetMapping("/titulo/{titulo}")  // retorna uma pequisa de um titulo ou por partes das letras desse titulo
+	public ResponseEntity<List<Postagem>>GetByTitulo(@PathVariable String titulo){  // recebe como parametro letras de um titulo
+		return ResponseEntity.ok(repository.findAllBytituloContainingIgnoreCase(titulo)); // por meio da query criada dentro do Repository, podemos utilizalo para 
 	}
 	
 	//end point de postagem.

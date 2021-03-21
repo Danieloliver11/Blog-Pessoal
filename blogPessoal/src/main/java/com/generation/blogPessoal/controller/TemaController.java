@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.generation.blogPessoal.model.Tema;
 import com.generation.blogPessoal.repository.TemaRepository;
 
-@RestController
-@RequestMapping("/tema")
+@RestController // define uma classe controller
+@RequestMapping("/tema") 
 @CrossOrigin(origins = "*", allowedHeaders ="*")
 public class TemaController {
 	

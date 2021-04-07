@@ -33,7 +33,13 @@ public class UsuarioController {
 	//metodo para cadastrar
 	@PostMapping("/cadastrar")
 	public ResponseEntity<Usuario> post(@RequestBody Usuario usuario){
-		return ResponseEntity.status(HttpStatus.CREATED)
-				.body(usuarioService.CadastrarUsuario(usuario));
+		Optional<Usuario> user = usuarioService.CadastrarUsuario(usuario);
+		try {
+			return ResponseEntity.ok(user.get());
+			
+		} catch(Exception e) {
+			return ResponseEntity.badRequest().build();
+			
+		}
 	}
 }

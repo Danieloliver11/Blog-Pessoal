@@ -20,9 +20,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 		
+		
 		Optional<Usuario> user = userRepository.findByUsuario(userName);
+		/* PARA VALIDAR O LOGIN, VERIFICAMOS SE O USUARIO CADASTRADOS SE ENCONTRA EM NOSSA BASE DE DADOS */
 		user.orElseThrow(()-> new UsernameNotFoundException(userName + " not found."));
 		
+		/* CASO O USUARIO ESTAJA CADASTRADO EM NOSSA BASE DE DADOS, RETORNAMOS O LOGIN BEM SUCEDIDO DO USUARIO */
 		return user.map(UserDetailsImplementation::new).get();
 	}
 

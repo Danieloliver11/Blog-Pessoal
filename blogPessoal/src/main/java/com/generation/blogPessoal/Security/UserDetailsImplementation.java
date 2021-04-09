@@ -14,7 +14,8 @@ public class UserDetailsImplementation implements UserDetails {
 	
 	private String userName;
 	private String password;
-	private List<GrantedAuthority> authorities;
+	private List<GrantedAuthority> authorities; /* LEMBRAR DE SEMPRE INSERIR ESSE ATRIBUTO, PARA QUE POSSAMOS TRAZER O SEU VALOR 
+	QUANDO FORMOS AUTENTICAR UM USUARIO PARA ACESSAR UMA DETERMIANDA PAGINA DA APLICACA */
 	
 	public UserDetailsImplementation(Usuario user) {
 		this.userName = user.getUsuario();
@@ -23,6 +24,7 @@ public class UserDetailsImplementation implements UserDetails {
 	
 	public UserDetailsImplementation() {} 
 	
+	/* COMO ESTAMOS IMPLEMENTADNDO UMA CLASSE, DEVEMOS IMPORTAR TODOS OS SEUS METODOS CRIADOS */
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub

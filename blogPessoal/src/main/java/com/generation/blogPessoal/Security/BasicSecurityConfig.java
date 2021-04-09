@@ -17,6 +17,7 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsService userDetailsService; //injeção de WebSecurityConfigurerAdapter
 	
+	/* METODO PARA SOBRESCREVER O PADRAO DA CLASSE 'UserDetailsService' */
 	@Override													//throws tratativa de erros.
 	protected void configure(AuthenticationManagerBuilder auth)throws Exception{
 		auth.userDetailsService(userDetailsService);
@@ -32,11 +33,11 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 		.antMatchers("/usuarios/logar").permitAll() // <---  libera esses end points para o client ter um acesso sem ter um token.
 		.antMatchers("/usuarios/cadastrar").permitAll() // <---  libera esses end points para o client ter um acesso sem ter um token.
-		.anyRequest().authenticated()
-		.and().httpBasic()
-		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		.anyRequest().authenticated() 	/* nao deixar acessar os demais endpoints sem estarem com um token */
+		.and().httpBasic() /* trabalha com uma seguranca basica */
+		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) /* STATELESS -> nao salva a secao */
 		.and().cors()
-		.and().csrf().disable();
+		.and().csrf().disable(); /* desabilita as configuracoes padroes */
 	}
 	
 

@@ -17,20 +17,23 @@ import com.generation.blogPessoal.model.Usuario;
 
 @RestController
 @RequestMapping("/usuarios")
-@CrossOrigin(origins = "*" , allowedHeaders ="*")
+@CrossOrigin(origins = "*" , allowedHeaders ="*") /* allowedHeaders <- dentro do header, nos tambem aceitamos quais quer informacoes */
 public class UsuarioController {
 	
 	@Autowired
 	private UsuarioService usuarioService; //injeção de service
 
-	// metodo para logar 
+	/* PARA LOGARMOS NO SISITEMA TRABALHAMOS COM A CLASSE 'UserLogin' */
 	@PostMapping("/logar")
 	public ResponseEntity<UserLogin> Autentication(@RequestBody Optional<UserLogin> user){
 	
 		return usuarioService.Logar(user).map(resp -> ResponseEntity.ok(resp))
-				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()); // build serve para montar toda a body.
+				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());/* CASO SEU USUARIO SEJA INVALIDO VOCE RECEBERA UM ERRO DE NAO AUTORIZADO */
+		// build serve para montar toda a body.
 	}
-	//metodo para cadastrar
+	
+	/* CHAMA O METODO DE CADASTRAR USUARIOS QUE E RESPONSAVEL POR VERIFICAR SE O USUARIO INSERIDO JA SE ENCONTRA NA BASE DE DADOS,
+	CODIFICAR A SENHA INSERIDA E SALVAR OS DADOS CADASTRADO NA BASE DE DADOS */
 	@PostMapping("/cadastrar")
 	public ResponseEntity<Usuario> post(@RequestBody Usuario usuario){
 		Optional<Usuario> user = usuarioService.CadastrarUsuario(usuario);
